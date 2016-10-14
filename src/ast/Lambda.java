@@ -1,6 +1,6 @@
 package ast;
 
-public class Lambda {
+public class Lambda implements Expression {
 	private Variable variable;
 	private Expression expression;
 
@@ -51,6 +51,6 @@ public class Lambda {
 	}
 
 	public String toString() {
-		return "\\" + variable + " -> " + expression;
+		return "λ" + variable + " → " + expression;
 	}
 }

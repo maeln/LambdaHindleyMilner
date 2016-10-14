@@ -46,6 +46,6 @@ public class Application implements Expression {
 
 	@Override
 	public String toString() {
-		return lexpr + " . " + rexpr;
+		return lexpr + " ◦ " + rexpr;
 	}
 }

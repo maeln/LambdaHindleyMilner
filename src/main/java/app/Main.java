@@ -1,13 +1,11 @@
 package app;
 
-import ast.Application;
-import ast.Lambda;
-import ast.Variable;
+import ast.*;
 
 public class Main {
 	public static void main(String[] args) {
 		// Display a lambda expression.
-		Application root = new Application(
+		Expression root = new Application(
 				new Lambda(
 						"x",
 						new Lambda(
@@ -21,6 +19,13 @@ public class Main {
 				new Variable("x")
 		);
 
+		Expression lambda = Lambda.makeLambdas(root, "s", "d", "g");
+		Expression let = new Let("x", lambda, root);
+		Expression app = Application.makeApps(lambda, root, lambda, let, root);
+
 		System.out.println(root);
+		System.out.println(lambda);
+		System.out.println(let);
+		System.out.println(app);
 	}
 }

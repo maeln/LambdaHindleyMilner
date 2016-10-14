@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.Arrays;
+
 public class Lambda implements Expression {
 	private Variable variable;
 	private Expression expression;
@@ -52,5 +54,15 @@ public class Lambda implements Expression {
 
 	public String toString() {
 		return "λ" + variable + " → " + expression;
+	}
+
+	public static Lambda makeLambdas(Expression expr, String... vars) {
+		return makeLambdas(expr, Arrays.asList(vars).stream().map(Variable::new).toArray(Variable[]::new));
+	}
+
+	public static Lambda makeLambdas(Expression expr, Variable... vars) {
+		if(vars.length == 1)
+			return new Lambda(vars[0], expr);
+		return new Lambda(vars[0], makeLambdas(expr, Arrays.copyOfRange(vars, 1, vars.length)));
 	}
 }

@@ -1,5 +1,7 @@
 package ast;
 
+import java.util.Arrays;
+
 public class Application implements Expression {
 	private Expression lexpr;
 	private Expression rexpr;
@@ -46,6 +48,12 @@ public class Application implements Expression {
 
 	@Override
 	public String toString() {
-		return lexpr + " ◦ " + rexpr;
+		return "(" + lexpr + " ◦ " + rexpr + ")";
+	}
+
+	public static Application makeApps(Expression... expr) {
+		if(expr.length == 2)
+			return new Application(expr[0], expr[1]);
+		return new Application(expr[0], makeApps(Arrays.copyOfRange(expr, 1, expr.length)));
 	}
 }

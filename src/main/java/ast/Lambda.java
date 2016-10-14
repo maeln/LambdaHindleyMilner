@@ -1,6 +1,8 @@
 package ast;
 
 import java.util.Arrays;
+import static org.fusesource.jansi.Ansi.*;
+import static org.fusesource.jansi.Ansi.Color.*;
 
 public class Lambda implements Expression {
 	private Variable variable;
@@ -53,7 +55,7 @@ public class Lambda implements Expression {
 	}
 
 	public String toString() {
-		return "λ" + variable + " → " + expression;
+		return ansi().fgGreen().a("λ").reset().a(variable).fgBlue().a(" → ").reset().a(expression).toString();
 	}
 
 	public static Lambda makeLambdas(Expression expr, String... vars) {

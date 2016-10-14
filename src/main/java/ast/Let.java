@@ -1,5 +1,8 @@
 package ast;
 
+import static org.fusesource.jansi.Ansi.*;
+import static org.fusesource.jansi.Ansi.Color.*;
+
 public class Let implements Expression {
 	private Variable variable;
 	private Expression expression;
@@ -63,6 +66,6 @@ public class Let implements Expression {
 
 	@Override
 	public String toString() {
-		return "Let " + variable + " = " + expression + " in " + inExpression;
+		return ansi().fgRed().a("Let ").reset().a(variable).a(" = ").a(expression).fgRed().a(" in ").reset().a(inExpression).toString();
 	}
 }

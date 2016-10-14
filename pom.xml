@@ -23,7 +23,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>(whatever version is current)</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -34,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>fully.qualified.MainClass</mainClass>
+                            <mainClass>app.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

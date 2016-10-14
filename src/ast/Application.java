@@ -26,6 +26,25 @@ public class Application implements Expression {
 	}
 
 	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Application that = (Application) o;
+
+		return lexpr != null ? lexpr.equals(that.lexpr) : that.lexpr == null
+				&& (rexpr != null ? rexpr.equals(that.rexpr) : that.rexpr == null);
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = lexpr != null ? lexpr.hashCode() : 0;
+		result = 31 * result + (rexpr != null ? rexpr.hashCode() : 0);
+		return result;
+	}
+
+	@Override
 	public String toString() {
 		return lexpr + " . " + rexpr;
 	}

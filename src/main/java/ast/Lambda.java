@@ -2,7 +2,6 @@ package ast;
 
 import java.util.Arrays;
 import static org.fusesource.jansi.Ansi.*;
-import static org.fusesource.jansi.Ansi.Color.*;
 
 public class Lambda implements Expression {
 	private Variable variable;
@@ -42,9 +41,8 @@ public class Lambda implements Expression {
 
 		Lambda lambda = (Lambda) o;
 
-		return variable != null ? variable.equals(lambda.variable) : lambda.variable == null
-				&& (expression != null ? expression.equals(lambda.expression) : lambda.expression == null);
-
+		if (!variable.equals(lambda.variable)) return false;
+		return expression.equals(lambda.expression);
 	}
 
 	@Override

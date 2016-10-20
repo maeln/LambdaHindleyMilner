@@ -3,7 +3,6 @@ package types;
 import inference.Substitution;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by valentin on 18/10/2016.
@@ -36,8 +35,8 @@ public class TVariable extends Type {
     }
 
     @Override
-    public TreeSet<TVariable> ftv() {
-        return new TreeSet<>(Collections.singleton(this));
+    public HashSet<TVariable> ftv() {
+        return new HashSet<>(Collections.singleton(this));
     }
 
     @Override

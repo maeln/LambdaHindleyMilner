@@ -2,7 +2,7 @@ package inference;
 
 import types.TVariable;
 
-import java.util.TreeSet;
+import java.util.HashSet;
 
 /**
  * Created by valentin on 18/10/2016.
@@ -10,5 +10,5 @@ import java.util.TreeSet;
 public interface Substitutable<T extends Substitutable> {
     T apply(Substitution substitution);
     T apply(Substitution... substitutions);
-    TreeSet<TVariable> ftv();
+    HashSet<TVariable> ftv();
 }

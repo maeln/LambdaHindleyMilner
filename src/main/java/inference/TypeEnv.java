@@ -3,7 +3,6 @@ package inference;
 import ast.Variable;
 import exceptions.UnboundVariableException;
 import types.TVariable;
-import types.Type;
 
 import java.util.*;
 
@@ -129,8 +128,8 @@ public class TypeEnv implements Substitutable<TypeEnv> {
     }
 
     @Override
-    public TreeSet<TVariable> ftv() {
-        TreeSet<TVariable> set = new TreeSet<>();
+    public HashSet<TVariable> ftv() {
+        HashSet<TVariable> set = new HashSet<>();
         for (Variable var : variables()) set.addAll(env.get(var).ftv());
         return set;
     }

@@ -2,6 +2,7 @@ package types;
 
 import inference.Substitution;
 
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -35,8 +36,8 @@ public class TFunction extends Type {
     }
 
     @Override
-    public TreeSet<TVariable> ftv() {
-        TreeSet<TVariable> set = new TreeSet<>(left.ftv());
+    public HashSet<TVariable> ftv() {
+        HashSet<TVariable> set = new HashSet<>(left.ftv());
         set.addAll(right.ftv());
         return set;
     }

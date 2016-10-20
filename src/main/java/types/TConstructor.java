@@ -1,8 +1,8 @@
 package types;
 
-import inference.Substitutable;
 import inference.Substitution;
 
+import java.util.HashSet;
 import java.util.TreeSet;
 
 /**
@@ -33,8 +33,8 @@ public class TConstructor extends Type {
     }
 
     @Override
-    public TreeSet<TVariable> ftv() {
-        return new TreeSet<>();
+    public HashSet<TVariable> ftv() {
+        return new HashSet<>();
     }
 
     // Object override - Begin

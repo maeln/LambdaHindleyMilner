@@ -4,6 +4,7 @@ import types.TVariable;
 import types.Type;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -53,8 +54,8 @@ public class Scheme implements Substitutable<Scheme> {
     }
 
     @Override
-    public TreeSet<TVariable> ftv() {
-        TreeSet<TVariable> freeVariables = type.ftv();
+    public HashSet<TVariable> ftv() {
+        HashSet<TVariable> freeVariables = type.ftv();
         variables.forEach(freeVariables::remove);
         return freeVariables;
     }

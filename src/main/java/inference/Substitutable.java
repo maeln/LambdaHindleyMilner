@@ -1,7 +1,9 @@
 package inference;
 
 import types.TVariable;
+import types.Type;
 
+import java.util.Collection;
 import java.util.HashSet;
 
 /**
@@ -10,5 +12,6 @@ import java.util.HashSet;
 public interface Substitutable<T extends Substitutable> {
     T apply(Substitution substitution);
     T apply(Substitution... substitutions);
+    T apply(Collection<Substitution> substitutions);
     HashSet<TVariable> ftv();
 }

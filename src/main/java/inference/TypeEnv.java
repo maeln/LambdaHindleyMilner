@@ -11,10 +11,10 @@ import java.util.*;
  *
  */
 public class TypeEnv implements Substitutable<TypeEnv> {
-    private final TreeMap<Variable, Scheme> env;
+    private final HashMap<Variable, Scheme> env;
 
     public TypeEnv() {
-        this.env = new TreeMap<>();
+        this.env = new HashMap<>();
     }
 
     /**
@@ -87,7 +87,7 @@ public class TypeEnv implements Substitutable<TypeEnv> {
      * @param typeEnv2 The TypeEnv to merge with.
      */
     public void mergeWith(TypeEnv typeEnv2) {
-        TreeMap<Variable, Scheme> typeEnv2Unified = new TreeMap<>();
+        HashMap<Variable, Scheme> typeEnv2Unified = new HashMap<>();
 
         //Make a fresh copy of typeEnv2 and delete all duplicate variables. This is to have a left-biased merge.
         typeEnv2Unified.putAll(typeEnv2.env);
@@ -123,6 +123,12 @@ public class TypeEnv implements Substitutable<TypeEnv> {
 
     @Override
     public TypeEnv apply(Substitution... substitutions) {
+        for (Substitution s : substitutions) apply(s);
+        return this;
+    }
+
+    @Override
+    public TypeEnv apply(Collection<Substitution> substitutions) {
         for (Substitution s : substitutions) apply(s);
         return this;
     }

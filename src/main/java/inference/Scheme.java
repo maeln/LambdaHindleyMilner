@@ -3,10 +3,7 @@ package inference;
 import types.TVariable;
 import types.Type;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by valentin on 18/10/2016.
@@ -48,6 +45,13 @@ public class Scheme implements Substitutable<Scheme> {
 
     @Override
     public Scheme apply(Substitution... substitutions) {
+        Scheme result = this;
+        for (Substitution s : substitutions) result = result.apply(s);
+        return result;
+    }
+
+    @Override
+    public Scheme apply(Collection<Substitution> substitutions) {
         Scheme result = this;
         for (Substitution s : substitutions) result = result.apply(s);
         return result;

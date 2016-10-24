@@ -2,11 +2,20 @@ package ast;
 
 import static org.fusesource.jansi.Ansi.*;
 
+/**
+ * Represent a let in lambda calculus.
+ */
 public class Let implements Expression {
 	private Variable variable;
 	private Expression expression;
 	private Expression inExpression;
 
+	/**
+	 * Constructor to build a let this way "Let <variable> = <expression> in <inExpression>".
+	 * @param variable Variable of the let.
+	 * @param expression Expression of the let.
+	 * @param inExpression Expression to apply the let to.
+	 */
 	public Let(Variable variable, Expression expression, Expression inExpression) {
 		this.variable = variable;
 		this.expression = expression;

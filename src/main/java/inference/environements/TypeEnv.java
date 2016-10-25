@@ -6,6 +6,7 @@ import types.Scheme;
 import inference.Substitution;
 import inference.interfaces.Substitutable;
 import types.TVariable;
+import types.Type;
 
 import java.util.*;
 
@@ -126,22 +127,21 @@ public class TypeEnv implements Substitutable<TypeEnv> {
     }
 
     @Override
-    public TypeEnv apply(Substitution... substitutions) {
-        for (Substitution s : substitutions) apply(s);
-        return this;
-    }
-
-    @Override
-    public TypeEnv apply(Collection<Substitution> substitutions) {
-        substitutions.forEach(this::apply);
-        return this;
-    }
-
-    @Override
     public HashSet<TVariable> ftv() {
         HashSet<TVariable> set = new HashSet<>();
         for (Variable var : variables()) set.addAll(env.get(var).ftv());
         return set;
+    }
+
+    @Override
+    public TypeEnv substitute(TVariable var, Type t) {
+        for(Variable variable : variables()) env.replace(variable, env.get(variable).substitute(var, t));
+        return this;
+    }
+
+    @Override
+    public TypeEnv identity() {
+        return this;
     }
     // Substitutable - End
 }

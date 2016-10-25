@@ -38,30 +38,22 @@ public class Scheme implements Substitutable<Scheme> {
     }
 
     // Substitutable - Begin
-    @Override
-    public Scheme apply(Substitution s) {
-        return variables.contains(s.variable()) ? this : forall(variables, type.apply(s));
-    }
-
-    @Override
-    public Scheme apply(Substitution... substitutions) {
-        Scheme result = this;
-        for (Substitution s : substitutions) result = result.apply(s);
-        return result;
-    }
-
-    @Override
-    public Scheme apply(Collection<Substitution> substitutions) {
-        Scheme result = this;
-        for (Substitution s : substitutions) result = result.apply(s);
-        return result;
-    }
 
     @Override
     public HashSet<TVariable> ftv() {
         HashSet<TVariable> freeVariables = type.ftv();
         variables.forEach(freeVariables::remove);
         return freeVariables;
+    }
+
+    @Override
+    public Scheme substitute(TVariable var, Type t) {
+        return variables.contains(var) ? this : forall(variables, type.substitute(var, t));
+    }
+
+    @Override
+    public Scheme identity() {
+        return this;
     }
     // Substitutable - End
 

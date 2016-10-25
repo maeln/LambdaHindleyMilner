@@ -4,7 +4,10 @@ import ast.Variable;
 import inference.environements.TypeEnv;
 import org.junit.Test;
 import types.Scheme;
+import types.TVariable;
+import types.Type;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -169,12 +172,21 @@ public class TypeEnvTest {
         Scheme expected1 = forall(variable("EXPECTED 1"));
         Scheme expected2 = forall(variable("EXPECTED 2"));
 
-        Substitution[] subs = {
-                new Substitution(variable(name), expected1.type()),
-                new Substitution(variable("NOT MATCHING"), variable("NOT MATCHING")),
-                new Substitution(variable(name + 1), variable("NOT MATCHING")),
-                new Substitution(variable(name + 2), expected2.type())
-        };
+        List<TVariable> vars = Arrays.asList(
+                variable(name),
+                variable("NOT MATCHING"),
+                variable(name + 1),
+                variable(name + 2)
+        );
+
+        List<Type> subsitutes = Arrays.asList(
+                expected1.type(),
+                variable("NOT MATCHING"),
+                variable("NOT MATCHING"),
+                expected2.type()
+        );
+
+        Substitution sub = new Substitution(vars, subsitutes);
 
         TypeEnv env = singleton(new Variable(name), forall(variable(name)));
         env.extend(
@@ -182,7 +194,7 @@ public class TypeEnvTest {
                 Arrays.asList(forall(variable(name + 2)), forall(variable(name+3)))
         );
 
-        env.apply(subs);
+        env.apply(sub);
 
         assertEquals("Should modify first binding", expected1, env.lookup(new Variable(name)));
         assertEquals("Should modify second binding", expected2, env.lookup(new Variable(name+2)));

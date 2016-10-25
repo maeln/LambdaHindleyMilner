@@ -3,6 +3,7 @@ package inference;
 import org.junit.Test;
 import types.Scheme;
 import types.TVariable;
+import types.Type;
 
 import java.util.*;
 
@@ -47,15 +48,24 @@ public class SchemeTest {
         TVariable expected2 = variable("EXPECTED 2");
         Scheme expected = forall(variable(name+1), function(expected1, expected2));
 
-        Substitution[] subs = {
-                new Substitution(variable(name), expected1),
-                new Substitution(variable("NOT MATCHING"), variable("NOT MATCHING")),
-                new Substitution(variable(name + 1), variable("NOT MATCHING")),
-                new Substitution(variable(name + 2), expected2)
-        };
+        List<TVariable> vars = Arrays.asList(
+                variable(name),
+                variable("NOT MATCHING"),
+                variable(name + 1),
+                variable(name + 2)
+        );
+
+        List<Type> substitutes = Arrays.asList(
+                expected1,
+                variable("NOT MATCHING"),
+                variable("NOT MATCHING"),
+                expected2
+        );
+
+        Substitution sub = new Substitution(vars, substitutes);
 
         Scheme scheme = forall(variable(name + 1), function(variable(name), variable(name + 2)));
-        Scheme result = scheme.apply(subs);
+        Scheme result = scheme.apply(sub);
 
         assertEquals("Should modify each branch of function", expected, result);
     }

@@ -3,8 +3,7 @@ package types;
 import inference.Substitution;
 import org.junit.Test;
 
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static types.TVariable.variable;
@@ -55,23 +54,6 @@ public class TVariableTest {
         Type result = var.apply(sub);
 
         assertEquals("Should replace the variable by the new one.", expected, result);
-    }
-
-    @Test
-    public void multipleApply() throws Exception {
-        TVariable expected = variable("MATCHING FINAL");
-        Substitution[] subs = new Substitution[n*2 + 1];
-        subs[0] = new Substitution(variable(name), variable("MATCHING 0"));
-        for (int i = 0; i < n ; i ++) {
-            subs[i * 2 + 1] = new Substitution(variable("NOT MATCHING"), variable("NOT MATCHING"));
-            subs[i * 2 + 2] = new Substitution(variable("MATCHING " + i), variable("MATCHING " + (i + 1)));
-        }
-        subs[n * 2] = new Substitution(variable("MATCHING " + (n - 1)), expected);
-
-        TVariable var = variable(name);
-        Type result = var.apply(subs);
-
-        assertEquals("Should have applied all substitutions in the good order", expected, result);
     }
 
     @Test

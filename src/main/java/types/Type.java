@@ -4,6 +4,7 @@ import inference.interfaces.Substitutable;
 import inference.Substitution;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * Created by valentin on 18/10/2016.
@@ -13,16 +14,14 @@ import java.util.Collection;
 public abstract class Type implements Substitutable<Type> {
 
     @Override
-    public Type apply(Substitution... substitutions) {
+    public Type apply(Substitution substitution) {
         Type result = this;
-        for (Substitution s : substitutions) result = result.apply(s);
+        for (TVariable var : substitution.variables()) result = result.substitute(var, substitution.substituteOf(var));
         return result;
     }
 
     @Override
-    public Type apply(Collection<Substitution> substitutions) {
-        Type result = this;
-        for (Substitution sub : substitutions) result = this.apply(sub);
-        return result;
+    public Type identity() {
+        return this;
     }
 }

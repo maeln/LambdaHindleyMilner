@@ -57,15 +57,13 @@ public class TFunctionTest {
     @Test
     public void multipleApply() throws Exception {
         TVariable expected = variable("EXPECTED");
-        Substitution[] subs = {
-                new Substitution(variable(name), expected),
-                new Substitution(variable("NOT MATCHING"), variable("NOT MATCHING")),
-                new Substitution(variable(name + 1), expected)
-        };
+        List<TVariable> vars = Arrays.asList(variable(name), variable("NOT MATCHING"), variable(name + 1));
+        List<Type> substitutes = Arrays.asList(expected, variable("NOT MATCHING"), expected);
+        Substitution sub = new Substitution(vars, substitutes);
 
         TFunction fun = function(variable(name), variable(name + 1));
 
-        Type result = fun.apply(subs);
+        Type result = fun.apply(sub);
 
         assertEquals("Should apply all substitutions", function(expected, expected), result);
     }

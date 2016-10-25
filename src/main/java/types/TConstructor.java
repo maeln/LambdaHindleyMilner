@@ -33,6 +33,11 @@ public class TConstructor extends Type {
     }
 
     @Override
+    public Type substitute(TVariable var, Type type) {
+        return this;
+    }
+
+    @Override
     public HashSet<TVariable> ftv() {
         return new HashSet<>();
     }

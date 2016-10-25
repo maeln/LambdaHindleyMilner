@@ -30,8 +30,8 @@ public class TVariable extends Type {
     }
 
     @Override
-    public Type apply(Substitution s) {
-        return this.equals(s.variable()) ? s.type() : this;
+    public Type substitute(TVariable var, Type type) {
+        return this.equals(var) ? type : this;
     }
 
     @Override

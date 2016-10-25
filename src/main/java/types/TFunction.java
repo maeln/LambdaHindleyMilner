@@ -31,8 +31,8 @@ public class TFunction extends Type {
 
     // Substitutable - Begin
     @Override
-    public Type apply(Substitution s) {
-        return function(left.apply(s), right.apply(s));
+    public Type substitute(TVariable var, Type type) {
+        return function(left.substitute(var, type), right.substitute(var, type));
     }
 
     @Override

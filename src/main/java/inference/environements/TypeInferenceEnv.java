@@ -48,13 +48,10 @@ public class TypeInferenceEnv {
     }
 
     public Type instantiate(Scheme scheme) {
-        List<Substitution> substitutions = new LinkedList<>();
+        List<Type> freshVars = new LinkedList<>();
+        scheme.variables().forEach(var -> freshVars.add(freshName()));
 
-        for (TVariable var : scheme.variables()) {
-            substitutions.add(new Substitution(var, typeGenerator.freshName()));
-        }
-
-        return scheme.type().apply(substitutions);
+        return scheme.type().apply(new Substitution(scheme.variables(), freshVars));
     }
 
     public Scheme generalize(Type t) {

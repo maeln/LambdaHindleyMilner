@@ -2,7 +2,6 @@ package ast;
 
 import inference.Constraint;
 import inference.Substitution;
-import inference.environements.UnifyEnv;
 import inference.interfaces.Inferable;
 import inference.environements.TypeInferenceEnv;
 import types.Type;

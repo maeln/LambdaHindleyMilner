@@ -1,6 +1,5 @@
 package exceptions;
 
-import inference.environements.UnifyEnv;
 import types.Type;
 
 /**

@@ -1,15 +1,9 @@
 package types;
 
 import exceptions.UnificationFailException;
-import inference.Constraint;
-import inference.environements.UnifyEnv;
 import inference.interfaces.Substitutable;
 import inference.Substitution;
 import inference.interfaces.Unifyable;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Created by valentin on 18/10/2016.

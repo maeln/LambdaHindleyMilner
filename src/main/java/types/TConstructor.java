@@ -1,10 +1,8 @@
 package types;
 
 import inference.Substitution;
-import inference.environements.UnifyEnv;
 
 import java.util.HashSet;
-import java.util.TreeSet;
 
 /**
  * Created by valentin on 18/10/2016.

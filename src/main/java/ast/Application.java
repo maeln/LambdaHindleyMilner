@@ -12,19 +12,19 @@ import static types.TFunction.function;
  * Represent an Application in Lambda calculus.
  */
 public class Application extends Expression {
-	private Expression lexpr;
-	private Expression rexpr;
+	private Expression left;
+	private Expression right;
 
-	public Application(Expression lexpr, Expression rexpr) {
-		this.lexpr = lexpr;
-		this.rexpr = rexpr;
+	public Application(Expression left, Expression right) {
+		this.left = left;
+		this.right = right;
 	}
 
 
 	@Override
 	public Type infer(TypeInferenceEnv env) {
-		Type left = getLexpr().infer(env);
-		Type right = getRexpr().infer(env);
+		Type left = getLeft().infer(env);
+		Type right = getRight().infer(env);
 		TVariable resultType = env.freshName();
 
 		env.unify(left, function(right, resultType));
@@ -34,20 +34,20 @@ public class Application extends Expression {
 
 
 
-	public Expression getLexpr() {
-		return lexpr;
+	public Expression getLeft() {
+		return left;
 	}
 
-	public void setLexpr(Expression lexpr) {
-		this.lexpr = lexpr;
+	public void setLeft(Expression left) {
+		this.left = left;
 	}
 
-	public Expression getRexpr() {
-		return rexpr;
+	public Expression getRight() {
+		return right;
 	}
 
-	public void setRexpr(Expression rexpr) {
-		this.rexpr = rexpr;
+	public void setRight(Expression right) {
+		this.right = right;
 	}
 
 	@Override
@@ -57,21 +57,21 @@ public class Application extends Expression {
 
 		Application that = (Application) o;
 
-		return lexpr != null ? lexpr.equals(that.lexpr) : that.lexpr == null
-				&& (rexpr != null ? rexpr.equals(that.rexpr) : that.rexpr == null);
+		return left != null ? left.equals(that.left) : that.left == null
+				&& (right != null ? right.equals(that.right) : that.right == null);
 
 	}
 
 	@Override
 	public int hashCode() {
-		int result = lexpr != null ? lexpr.hashCode() : 0;
-		result = 31 * result + (rexpr != null ? rexpr.hashCode() : 0);
+		int result = left != null ? left.hashCode() : 0;
+		result = 31 * result + (right != null ? right.hashCode() : 0);
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + lexpr + " ◦ " + rexpr + ")";
+		return "(" + left + " ◦ " + right + ")";
 	}
 
 	public static Application makeApps(Expression... expr) {

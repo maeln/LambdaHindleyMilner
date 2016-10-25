@@ -2,6 +2,9 @@ package ast;
 
 import java.util.Arrays;
 
+/**
+ * Represent an Application in Lambda calculus.
+ */
 public class Application implements Expression {
 	private Expression lexpr;
 	private Expression rexpr;
@@ -51,6 +54,12 @@ public class Application implements Expression {
 		return "(" + lexpr + " ◦ " + rexpr + ")";
 	}
 
+	/**
+	 * Utility function to chain Application.
+	 * ((λx → λy → (a ◦ y) ◦ x) ◦ (λs → λd → λg → (λx → λy → (a ◦ y) ◦ x) ◦ ....
+	 * @param expr Expressions to apply to each other in a right priority order.
+	 * @return return the root of the Application.
+	 */
 	public static Application makeApps(Expression... expr) {
 		if(expr.length == 2)
 			return new Application(expr[0], expr[1]);

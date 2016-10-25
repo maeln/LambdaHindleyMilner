@@ -1,13 +1,21 @@
 package ast;
 
 import static org.fusesource.jansi.Ansi.*;
-import static org.fusesource.jansi.Ansi.Color.*;
 
+/**
+ * Represent a let in lambda calculus.
+ */
 public class Let implements Expression {
 	private Variable variable;
 	private Expression expression;
 	private Expression inExpression;
 
+	/**
+	 * Constructor to build a let this way "Let <variable> = <expression> in <inExpression>".
+	 * @param variable Variable of the let.
+	 * @param expression Expression of the let.
+	 * @param inExpression Expression to apply the let to.
+	 */
 	public Let(Variable variable, Expression expression, Expression inExpression) {
 		this.variable = variable;
 		this.expression = expression;
@@ -51,9 +59,9 @@ public class Let implements Expression {
 
 		Let let = (Let) o;
 
-		return variable != null ? variable.equals(let.variable) : let.variable == null
-				&& (expression != null ? expression.equals(let.expression) : let.expression == null
-				&& (inExpression != null ? inExpression.equals(let.inExpression) : let.inExpression == null));
+		if (!variable.equals(let.variable)) return false;
+		if (!expression.equals(let.expression)) return false;
+		return inExpression.equals(let.inExpression);
 	}
 
 	@Override
@@ -66,6 +74,7 @@ public class Let implements Expression {
 
 	@Override
 	public String toString() {
-		return ansi().fgRed().a("Let ").reset().a(variable).a(" = ").a(expression).fgRed().a(" in ").reset().a(inExpression).toString();
+		return ansi().fgRed().a("Let ").reset().a(variable).a(" = ").a(expression).fgRed().a(" in ").reset()
+				.a(inExpression).toString();
 	}
 }

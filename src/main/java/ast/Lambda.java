@@ -2,8 +2,10 @@ package ast;
 
 import java.util.Arrays;
 import static org.fusesource.jansi.Ansi.*;
-import static org.fusesource.jansi.Ansi.Color.*;
 
+/**
+ * Represent a Lambda expression in Lambda calculus.
+ */
 public class Lambda implements Expression {
 	private Variable variable;
 	private Expression expression;
@@ -13,7 +15,11 @@ public class Lambda implements Expression {
 		this.expression = expression;
 	}
 
-	// Utility constructor to be able to type new Lambda("x", ...).
+	/**
+	 * Utility constructor to be able to type new Lambda("x", ...).
+	 * @param variable Argument of the Lambda expression.
+	 * @param expression Expression (body) of the lambda expression.
+ 	 */
 	public Lambda(String variable, Expression expression) {
 		this.variable = new Variable(variable);
 		this.expression = expression;
@@ -42,9 +48,8 @@ public class Lambda implements Expression {
 
 		Lambda lambda = (Lambda) o;
 
-		return variable != null ? variable.equals(lambda.variable) : lambda.variable == null
-				&& (expression != null ? expression.equals(lambda.expression) : lambda.expression == null);
-
+		if (!variable.equals(lambda.variable)) return false;
+		return expression.equals(lambda.expression);
 	}
 
 	@Override
@@ -58,10 +63,22 @@ public class Lambda implements Expression {
 		return ansi().fgGreen().a("λ").reset().a(variable).fgBlue().a(" → ").reset().a(expression).toString();
 	}
 
+	/**
+	 * Utility function to be able to write more simply lambda expression like \x,y,z -> ...
+	 * @param expr The expression (body) of the lambda expression.
+	 * @param vars The variables to use in the lambda.
+	 * @return The root lambda.
+	 */
 	public static Lambda makeLambdas(Expression expr, String... vars) {
 		return makeLambdas(expr, Arrays.asList(vars).stream().map(Variable::new).toArray(Variable[]::new));
 	}
 
+	/**
+	 * Utility function to be able to write more simply lambda expression like \x,y,z -> ...
+	 * @param expr The expression (body) of the lambda expression.
+	 * @param vars The variables to use in the lambda.
+	 * @return The root lambda.
+	 */
 	public static Lambda makeLambdas(Expression expr, Variable... vars) {
 		if(vars.length == 1)
 			return new Lambda(vars[0], expr);

@@ -9,7 +9,7 @@ import static org.fusesource.jansi.Ansi.*;
 /**
  * Represent a let in lambda calculus.
  */
-public class Let implements Expression {
+public class Let extends Expression {
 	private Variable variable;
 	private Expression expression;
 	private Expression inExpression;

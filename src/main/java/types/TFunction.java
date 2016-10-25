@@ -1,9 +1,9 @@
 package types;
 
 import inference.Substitution;
+import inference.environements.UnifyEnv;
 
 import java.util.HashSet;
-import java.util.TreeSet;
 
 /**
  * Created by valentin on 18/10/2016.
@@ -42,6 +42,14 @@ public class TFunction extends Type {
         return set;
     }
     //Substitutable - End
+
+
+    @Override
+    protected Substitution unifyWith( TFunction fun) {
+        Substitution sub1 = left.unifyWith(fun.left);
+        Substitution sub2 = right.apply(sub1).unifyWith(fun.right.apply(sub1));
+        return sub2.composeWith(sub1);
+    }
 
     // Object override - Begin
     @Override

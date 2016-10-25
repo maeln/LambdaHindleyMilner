@@ -37,7 +37,7 @@ public class Substitution implements Substitutable<Substitution>{
         return subs.get(var);
     }
 
-    public Substitution compose(Substitution sub) {
+    public Substitution composeWith(Substitution sub) {
         Substitution substituted = new Substitution(sub);
         substituted.apply(this);
         subs.putAll(substituted.subs);

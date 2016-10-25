@@ -13,7 +13,7 @@ import static types.TFunction.function;
 /**
  * Represent a Lambda expression in Lambda calculus.
  */
-public class Lambda implements Expression {
+public class Lambda extends Expression {
 	private Variable variable;
 	private Expression expression;
 

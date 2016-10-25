@@ -11,7 +11,7 @@ import static types.TFunction.function;
 /**
  * Represent an Application in Lambda calculus.
  */
-public class Application implements Expression {
+public class Application extends Expression {
 	private Expression lexpr;
 	private Expression rexpr;
 

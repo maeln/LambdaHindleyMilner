@@ -3,7 +3,7 @@ package ast;
 import inference.environements.TypeInferenceEnv;
 import types.Type;
 
-public class Variable implements Expression {
+public class Variable extends Expression {
 	private String name;
 
 	public Variable(String name) {

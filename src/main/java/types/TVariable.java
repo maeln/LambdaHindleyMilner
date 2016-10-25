@@ -1,6 +1,7 @@
 package types;
 
 import inference.Substitution;
+import inference.environements.UnifyEnv;
 
 import java.util.*;
 
@@ -37,6 +38,16 @@ public class TVariable extends Type {
     @Override
     public HashSet<TVariable> ftv() {
         return new HashSet<>(Collections.singleton(this));
+    }
+
+    @Override
+    protected Substitution unifyWith(TFunction fun) {
+        return bind(this, fun);
+    }
+
+    @Override
+    protected Substitution unifyWith(TConstructor cons) {
+        return bind(this, cons);
     }
 
     @Override

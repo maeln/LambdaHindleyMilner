@@ -1,7 +1,14 @@
 package ast;
 
+import inference.environements.TypeInferenceEnv;
+import types.TVariable;
+import types.Type;
+
 import java.util.Arrays;
+
+import static types.Scheme.forall;
 import static org.fusesource.jansi.Ansi.*;
+import static types.TFunction.function;
 
 /**
  * Represent a Lambda expression in Lambda calculus.
@@ -25,10 +32,22 @@ public class Lambda implements Expression {
 		this.expression = expression;
 	}
 
+
+
+	@Override
+	public Type infer(TypeInferenceEnv env) {
+		TVariable paramType = env.freshName();
+		TypeInferenceEnv localEnv = env.inEnv(getVariable(), forall(paramType));
+		Type resultType = getExpression().infer(localEnv);
+		return function(paramType, resultType);
+	}
+
+
+
+
 	public Variable getVariable() {
 		return variable;
 	}
-
 	public void setVariable(Variable variable) {
 		this.variable = variable;
 	}
@@ -36,7 +55,6 @@ public class Lambda implements Expression {
 	public Expression getExpression() {
 		return expression;
 	}
-
 	public void setExpression(Expression expression) {
 		this.expression = expression;
 	}

@@ -1,22 +1,19 @@
 package inference;
 
 import ast.Variable;
+import inference.environements.TypeEnv;
 import org.junit.Test;
-import org.junit.internal.runners.model.EachTestNotifier;
-import org.junit.internal.runners.statements.ExpectException;
-import types.TVariable;
-import types.Type;
+import types.Scheme;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static inference.Scheme.forall;
+import static types.Scheme.forall;
 import static org.junit.Assert.*;
 import static types.TFunction.function;
 import static types.TVariable.variable;
-import static inference.TypeEnv.singleton;
+import static inference.environements.TypeEnv.singleton;
 
 /**
  * Created by valentin on 24/10/2016.

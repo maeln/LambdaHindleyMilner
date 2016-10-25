@@ -1,5 +1,6 @@
 package inference;
 
+import inference.environements.TypeGenerator;
 import org.junit.Test;
 import types.TVariable;
 

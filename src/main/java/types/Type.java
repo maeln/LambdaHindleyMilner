@@ -1,7 +1,6 @@
 package types;
 
-import inference.Infer;
-import inference.Substitutable;
+import inference.interfaces.Substitutable;
 import inference.Substitution;
 
 import java.util.Collection;

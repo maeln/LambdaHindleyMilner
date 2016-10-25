@@ -1,7 +1,7 @@
-package inference;
+package inference.interfaces;
 
+import inference.Substitution;
 import types.TVariable;
-import types.Type;
 
 import java.util.Collection;
 import java.util.HashSet;

@@ -1,6 +1,8 @@
 package ast;
 
 import org.junit.Test;
+import types.TFunction;
+import types.Type;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +10,19 @@ import static org.junit.Assert.*;
  * Created by maeln on 20/10/16.
  */
 public class LambdaTest {
+
+	@Test
+	public void infer() throws Exception {
+		final String name = "x";
+		Expression exp = new Lambda(new Variable(name), new Variable(name));
+
+		Type t = exp.infer();
+
+		assertTrue("Should return a TFunction", t instanceof TFunction);
+		TFunction fun = (TFunction) t;
+		assertEquals("Should return t -> t", fun.left(), fun.right());
+	}
+
 	@Test
 	public void testEquals() throws Exception {
 		Lambda reference = new Lambda(new Variable("x"), new Variable("x"));

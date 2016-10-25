@@ -1,6 +1,12 @@
 package ast;
 
+import inference.environements.TypeInferenceEnv;
+import types.TVariable;
+import types.Type;
+
 import java.util.Arrays;
+
+import static types.TFunction.function;
 
 /**
  * Represent an Application in Lambda calculus.
@@ -13,6 +19,20 @@ public class Application implements Expression {
 		this.lexpr = lexpr;
 		this.rexpr = rexpr;
 	}
+
+
+	@Override
+	public Type infer(TypeInferenceEnv env) {
+		Type left = getLexpr().infer(env);
+		Type right = getRexpr().infer(env);
+		TVariable resultType = env.freshName();
+
+		env.unify(left, function(right, resultType));
+
+		return resultType;
+	}
+
+
 
 	public Expression getLexpr() {
 		return lexpr;
@@ -54,12 +74,6 @@ public class Application implements Expression {
 		return "(" + lexpr + " ◦ " + rexpr + ")";
 	}
 
-	/**
-	 * Utility function to chain Application.
-	 * ((λx → λy → (a ◦ y) ◦ x) ◦ (λs → λd → λg → (λx → λy → (a ◦ y) ◦ x) ◦ ....
-	 * @param expr Expressions to apply to each other in a right priority order.
-	 * @return return the root of the Application.
-	 */
 	public static Application makeApps(Expression... expr) {
 		if(expr.length == 2)
 			return new Application(expr[0], expr[1]);

@@ -1,7 +1,7 @@
-package inference;
+package types;
 
-import types.TVariable;
-import types.Type;
+import inference.Substitution;
+import inference.interfaces.Substitutable;
 
 import java.util.*;
 

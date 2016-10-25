@@ -1,5 +1,8 @@
 package ast;
 
+import inference.environements.TypeInferenceEnv;
+import types.Type;
+
 public class Variable implements Expression {
 	private String name;
 
@@ -15,6 +18,14 @@ public class Variable implements Expression {
 		this.name = name;
 	}
 
+
+	@Override
+	public Type infer(TypeInferenceEnv env) {
+		return env.instantiate(env.lookup(this));
+	}
+
+
+	//Object override
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

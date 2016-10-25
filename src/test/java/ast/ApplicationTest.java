@@ -1,6 +1,8 @@
 package ast;
 
 import org.junit.Test;
+import types.TVariable;
+import types.Type;
 
 import static org.junit.Assert.*;
 
@@ -8,6 +10,17 @@ import static org.junit.Assert.*;
  * Created by maeln on 20/10/16.
  */
 public class ApplicationTest {
+
+	@Test
+	public void infer() throws Exception {
+		Variable x = new Variable("x");
+		Expression exp = new Application(new Lambda(x,x), new Lambda(x,x));
+
+		Type t = exp.infer();
+
+		assertTrue("Should return a TVariable", t instanceof TVariable);
+	}
+
 	@Test
 	public void testEquals() throws Exception {
 		Application reference = new Application(new Lambda("x", new Variable("y")), new Lambda("x", new Variable("x")));

@@ -1,7 +1,10 @@
-package inference;
+package inference.environements;
 
 import ast.Variable;
 import exceptions.UnboundVariableException;
+import types.Scheme;
+import inference.Substitution;
+import inference.interfaces.Substitutable;
 import types.TVariable;
 
 import java.util.*;
@@ -86,7 +89,7 @@ public class TypeEnv implements Substitutable<TypeEnv> {
      * If a variable is present in both TypeEnv, the Scheme of the current TypeEnv will be preferred.
      * @param typeEnv2 The TypeEnv to merge with.
      */
-    public void mergeWith(TypeEnv typeEnv2) {
+    public TypeEnv mergeWith(TypeEnv typeEnv2) {
         HashMap<Variable, Scheme> typeEnv2Unified = new HashMap<>();
 
         //Make a fresh copy of typeEnv2 and delete all duplicate variables. This is to have a left-biased merge.
@@ -94,6 +97,7 @@ public class TypeEnv implements Substitutable<TypeEnv> {
         variables().forEach(typeEnv2Unified::remove);
 
         env.putAll(typeEnv2Unified);
+        return this;
     }
 
     /**
@@ -129,7 +133,7 @@ public class TypeEnv implements Substitutable<TypeEnv> {
 
     @Override
     public TypeEnv apply(Collection<Substitution> substitutions) {
-        for (Substitution s : substitutions) apply(s);
+        substitutions.forEach(this::apply);
         return this;
     }
 

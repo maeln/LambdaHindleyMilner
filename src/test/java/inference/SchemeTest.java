@@ -1,14 +1,12 @@
 package inference;
 
-import ast.Variable;
 import org.junit.Test;
-import types.TFunction;
+import types.Scheme;
 import types.TVariable;
-import types.Type;
 
 import java.util.*;
 
-import static inference.Scheme.forall;
+import static types.Scheme.forall;
 import static org.junit.Assert.*;
 import static types.TFunction.function;
 import static types.TVariable.variable;

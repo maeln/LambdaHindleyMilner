@@ -1,4 +1,4 @@
-package inference;
+package inference.environements;
 
 import types.TVariable;
 

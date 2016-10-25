@@ -1,5 +1,9 @@
 package ast;
 
+import types.Scheme;
+import inference.environements.TypeInferenceEnv;
+import types.Type;
+
 import static org.fusesource.jansi.Ansi.*;
 
 /**
@@ -23,15 +27,21 @@ public class Let implements Expression {
 	}
 
 	public Let(String variable, Expression expression, Expression inExpression) {
-		this.variable = new Variable(variable);
-		this.expression = expression;
-		this.inExpression = inExpression;
+		this(new Variable(variable), expression, inExpression);
 	}
+
+
+	@Override
+	public Type infer(TypeInferenceEnv env) {
+		Scheme generalizedType = env.generalize(getExpression().infer(env));
+		TypeInferenceEnv localEnv = env.inEnv(getVariable(), generalizedType);
+		return getInExpression().infer(localEnv);
+	}
+
 
 	public Variable getVariable() {
 		return variable;
 	}
-
 	public void setVariable(Variable variable) {
 		this.variable = variable;
 	}
@@ -39,7 +49,6 @@ public class Let implements Expression {
 	public Expression getExpression() {
 		return expression;
 	}
-
 	public void setExpression(Expression expression) {
 		this.expression = expression;
 	}
@@ -47,7 +56,6 @@ public class Let implements Expression {
 	public Expression getInExpression() {
 		return inExpression;
 	}
-
 	public void setInExpression(Expression inExpression) {
 		this.inExpression = inExpression;
 	}

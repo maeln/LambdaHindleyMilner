@@ -10,20 +10,22 @@ import java.util.HashSet;
  * Constructeur de type. Ceci n'est pas utilisé pour le moment.
  */
 public class TConstructor extends Type {
-    //TODO
+    private final static HashSet<TConstructor> instantiated = new HashSet<>();
+    private final String name;
 
-    private String name;
-
-    public TConstructor(String name) {
+    private TConstructor(String name) {
+        System.out.println("Creation of TConstructor(" + name + ")");
         this.name = name;
     }
 
-    public String getName() {
+    public static TConstructor constructor(String name) {
+        TConstructor cons = new TConstructor(name);
+        if(instantiated.add(cons)) System.out.println("Creation avoidable : TConstructor(" + name + ")");
+        return cons;
+    }
+
+    public String name() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
@@ -59,9 +61,7 @@ public class TConstructor extends Type {
 
     @Override
     public String toString() {
-        return "TConstructor{" +
-                "name='" + name + '\'' +
-                '}';
+        return name;
     }
     // Object override - End
 }

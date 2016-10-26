@@ -10,8 +10,9 @@ import java.util.*;
  */
 public class TVariable extends Type {
     private final String name;
+    private final static HashSet<TVariable> instantiated = new HashSet<>();
 
-    public TVariable(String name) {
+    private TVariable(String name) {
         this.name = name;
     }
 
@@ -20,7 +21,9 @@ public class TVariable extends Type {
     }
 
     public static TVariable variable(String name) {
-        return new TVariable(name);
+        TVariable var = new TVariable(name);
+        if(!instantiated.add(var)) System.out.println("Creation avoidable : TVariable(" + name + ")");
+        return var;
     }
 
     public static List<TVariable> variables(String... names) {

@@ -30,7 +30,7 @@ public class TypeInferenceEnv {
     private TypeInferenceEnv(TypeInferenceEnv globalEnv) {
         typeGenerator = globalEnv.typeGenerator;
         typeEnv = new TypeEnv().mergeWith(globalEnv.typeEnv);
-        constraints = new LinkedList<>();
+        constraints = globalEnv.constraints();
     }
 
     public TypeInferenceEnv inEnv(Variable var, Scheme scheme) {

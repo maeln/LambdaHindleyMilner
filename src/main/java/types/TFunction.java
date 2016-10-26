@@ -10,6 +10,7 @@ import java.util.HashSet;
 public class TFunction extends Type {
     private final Type left;
     private final Type right;
+    private final static HashSet<TFunction> instantiated = new HashSet<>();
 
     private TFunction(Type left, Type right) {
         this.left = left;
@@ -25,6 +26,8 @@ public class TFunction extends Type {
     }
 
     public static TFunction function(Type left, Type right) {
+        TFunction f = new TFunction(left, right);
+        if(!instantiated.add(f)) System.out.println("Creation avoidable : TFunction(" + left + ", " + right + ")" );
         return new TFunction(left, right);
     }
 

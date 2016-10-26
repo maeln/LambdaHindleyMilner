@@ -71,7 +71,7 @@ public class Application extends Expression {
 
 	@Override
 	public String toString() {
-		return "(" + left + " ◦ " + right + ")";
+		return "(" + left + ") ◦ (" + right + ")";
 	}
 
 	public static Application makeApps(Expression... expr) {

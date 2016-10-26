@@ -16,7 +16,7 @@ public interface Unifyable {
 
     default Substitution bind(TVariable var, Type type) {
         if(var.equals(type)) return new Substitution();
-        if(type.ftv().contains(var)) throw new InfiniteTypeException();
+        if(type.ftv().contains(var)) throw new InfiniteTypeException(this, type);
         return new Substitution(var, type);
     }
 }

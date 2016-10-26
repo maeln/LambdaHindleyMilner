@@ -26,6 +26,7 @@ public abstract class Type implements Substitutable<Type>, Unifyable{
 
     @Override
     public final Substitution unifyWith(Type type) {
+        if(this.equals(type)) return new Substitution();
         if(type instanceof TVariable) return bind((TVariable) type, this);
         if(type instanceof TFunction) return unifyWith((TFunction) type);
         if(type instanceof TConstructor) return unifyWith((TConstructor) type);

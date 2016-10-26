@@ -72,7 +72,7 @@ public class SchemeTest {
 
     @Test
     public void ftv() throws Exception {
-        Scheme sch = new Scheme(Collections.singletonList(variable(name)), function(variable(name), variable(name + 1)));
+        Scheme sch = forall(variable(name), function(variable(name), variable(name + 1)));
         TVariable[] expected = { variable(name + 1) };
 
         HashSet<TVariable> freeVars = sch.ftv();
@@ -82,11 +82,11 @@ public class SchemeTest {
 
     @Test
     public void equals() throws Exception {
-        Scheme sch1 = new Scheme(Collections.emptyList(), variable(name));
-        Scheme sch2 = new Scheme(Collections.emptyList(), variable(name));
-        Scheme sch3 = new Scheme(Collections.singletonList(variable(name)), variable(name));
-        Scheme sch4 = new Scheme(Collections.emptyList(), variable(name + 1));
-        Scheme sch5 = new Scheme(Collections.singletonList(variable(name)), variable(name + 1));
+        Scheme sch1 = forall(variable(name));
+        Scheme sch2 = forall(variable(name));
+        Scheme sch3 = forall(variable(name), variable(name));
+        Scheme sch4 = forall(variable(name + 1));
+        Scheme sch5 = forall(variable(name), variable(name + 1));
 
         assertTrue("Should be equal if both forall and type are equals", sch1.equals(sch2));
     }

@@ -11,8 +11,9 @@ import java.util.*;
 public class Scheme implements Substitutable<Scheme> {
     private final List<TVariable> variables;
     private final Type type;
+    private final static HashSet<Scheme> instantiated = new HashSet<>();
 
-    public Scheme(List<TVariable> variables, Type type) {
+    private Scheme(List<TVariable> variables, Type type) {
         this.variables = variables;
         this.type = type;
     }
@@ -34,7 +35,9 @@ public class Scheme implements Substitutable<Scheme> {
     }
 
     public static Scheme forall(List<TVariable> variables, Type type) {
-        return new Scheme(variables, type);
+        Scheme sch = new Scheme(variables, type);
+        if(!instantiated.add(sch)) System.out.println("Creation avoidable");
+        return sch;
     }
 
     // Substitutable - Begin

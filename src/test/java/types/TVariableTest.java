@@ -37,7 +37,7 @@ public class TVariableTest {
 
     @Test
     public void applyNotMatching() throws Exception {
-        Substitution sub = new Substitution(new TVariable("NOT MATCHING"), new TVariable("NOT MATCHING"));
+        Substitution sub = new Substitution(variable("NOT MATCHING"), variable("NOT MATCHING"));
         TVariable var = variable(name);
 
         Type result = var.apply(sub);

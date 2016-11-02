@@ -9,7 +9,7 @@ import java.util.HashSet;
 /**
  * Created by valentin on 24/10/2016.
  */
-public class Constraint implements Substitutable<Constraint> {
+public class Constraint extends Substitutable<Constraint> {
     private final Type left, right;
 
     public Constraint(Type left, Type right) {
@@ -45,5 +45,10 @@ public class Constraint implements Substitutable<Constraint> {
 
     public Substitution unify() {
         return left.unifyWith(right);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + left + ", " + right + ')';
     }
 }

@@ -14,7 +14,7 @@ import java.util.*;
  * Created by valentin on 20/10/2016.
  *
  */
-public class TypeEnv implements Substitutable<TypeEnv> {
+public class TypeEnv extends Substitutable<TypeEnv> {
     private final HashMap<Variable, Scheme> env;
 
     public TypeEnv() {

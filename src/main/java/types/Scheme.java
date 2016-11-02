@@ -3,15 +3,18 @@ package types;
 import inference.Substitution;
 import inference.interfaces.Substitutable;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by valentin on 18/10/2016.
  */
-public class Scheme implements Substitutable<Scheme> {
+public class Scheme extends Substitutable<Scheme> {
     private final List<TVariable> variables;
-    private final Type type;
+    private Type type;
     private final static HashSet<Scheme> instantiated = new HashSet<>();
+    private final HashSet<Substitution> applyedSubs = new HashSet<>();
 
     private Scheme(List<TVariable> variables, Type type) {
         this.variables = variables;
@@ -41,7 +44,6 @@ public class Scheme implements Substitutable<Scheme> {
     }
 
     // Substitutable - Begin
-
     @Override
     public HashSet<TVariable> ftv() {
         HashSet<TVariable> freeVariables = type.ftv();
@@ -51,7 +53,14 @@ public class Scheme implements Substitutable<Scheme> {
 
     @Override
     public Scheme substitute(TVariable var, Type t) {
-        return variables.contains(var) ? this : forall(variables, type.substitute(var, t));
+        if(variables.contains(var)) type = type.substitute(var, t);
+        return this;
+    }
+
+    @Override
+    public Scheme apply(Substitution s) {
+        if(!applyedSubs.contains(s)) return this;
+        return super.apply(s);
     }
 
     @Override

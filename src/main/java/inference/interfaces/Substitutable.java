@@ -10,17 +10,17 @@ import java.util.HashSet;
 /**
  * Created by valentin on 18/10/2016.
  */
-public interface Substitutable<T extends Substitutable<T>> {
-    default T apply(Substitution s) {
+public abstract class Substitutable<T extends Substitutable<T>> {
+    public T apply(Substitution s) {
         T result = identity();
         for (TVariable var : s.variables()) {
             result = result.substitute(var, s.substituteOf(var));
         }
         return result;
     }
-    HashSet<TVariable> ftv();
+    abstract public HashSet<TVariable> ftv();
 
-    T substitute(TVariable var, Type t);
+    abstract public T substitute(TVariable var, Type t);
 
-    T identity();
+    abstract public T identity();
 }

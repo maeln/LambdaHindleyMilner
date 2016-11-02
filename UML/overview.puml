@@ -1,0 +1,150 @@
+@startuml
+
+package ast {
+    Expression --|> Inferable
+
+    abstract class Expression {
+        + Type : infer()
+    }
+
+    Application --|> Expression
+    Lambda --|> Expression
+    Let --|> Expression
+    Variable --|> Expression
+    Literal --|> Expression
+
+    class Application {
+        + Expression : left
+        + Expression : right
+
+        + {static} Application : makeApps(Expressions... exps)
+    }
+
+    class Lambda {
+        + Variable : variable
+        + Expression : expression
+
+        + {static} Application : makeLambdas(Expression exp, Variable... vars)
+    }
+
+    class Let {
+        + Variable : variable
+        + Expression : expression
+        + Expression : inExpression
+    }
+
+    class Variable {
+        + String : name
+    }
+
+    abstract class Literal<T> {
+        + T : value()
+    }
+
+    package lit {
+        Bool --|> Literal
+        Int --|> Literal
+    }
+}
+
+package inference {
+    Constraint --|> Substituable
+    class Constraint {
+    }
+
+    class Substitution --|> Substitutable
+    class Substitution {
+         Type : substituteOf(TVariable var)
+         Substitution : composeWith(Substitution sub)
+    }
+
+    package environements {
+        TypeEnv --|> Substituable
+        class TypeEnv {
+            - HashMap<Variable, Scheme> : env
+            + {static} TypeEnv : singleton(Variable var, Scheme scheme)
+            + void : extend(Variable var, Scheme scheme)
+            + void : extend(List<Variable> vars, List<Scheme> schemes)
+            + Scheme : lookup(Variable var)
+            + boolean : contains(Variable var)
+            + List<Variable> variables()
+            + TypeEnv : TypeEnv mergeWith(TypeEnv env)
+            + void : remove(Variable var)
+            + TypeEnv : apply(Substitution sub)
+            + Set<TVariable> ftv()
+            + TypeEnv : substitute(TVariable var, Type t)
+        }
+
+        class TypeGenerator {
+            + TVariable : freshName()
+        }
+
+        class TypeInferenceEnv {
+            + TypeInferenceEnv : inEnv(Variable var, Scheme scheme)
+            + void : bind(Variable var, Scheme scheme)
+            + void : unify(Type t1, Type t2)
+            + Type : instantiate(Scheme scheme)
+            + Scheme : generalize(Type t)
+            + Scheme : lookup(Variable variable)
+            + TVariable : freshName()
+            + List<Constraint> : constraints()
+        }
+    }
+
+    package interfaces {
+        interface Inferable<Context, Return> {
+            + Return : infer(Context context)
+            + Return : infer()
+        }
+
+        interface Substituable<T extends Substitutable<T>> {
+            + T : apply(Substitution s)
+            + HashSet<TVariable> : ftv()
+            + T : substitute(TVariable var, Type t)
+            + T : identity()
+        }
+
+        interface Unifyable {
+            + Substitution : unifyWith(Type type)
+            + Substitution : bind(TVariable var, Type type)
+        }
+    }
+}
+
+package types {
+    abstract class Type --|> Substitutable
+    abstract class Type --|> Unifyable
+    abstract class Type {
+
+    }
+
+    class TVariable --|> Type
+    class TVariable {
+        + String : name()
+        + {static} List<TVariable> : variables(List<String> names)
+    }
+
+    class TFunction --|> Type
+    class TFunction {
+        + Type : left()
+        + Type : right()
+        + {static} TFunction : function(Type left, Type right)
+    }
+
+    class TConstructor --|> Type
+    class TConstructor {
+        + String : name()
+        + {static} TConstructor : constructor(String name)
+    }
+
+    class Scheme --|> Substitutable
+    class Scheme {
+        + List<TVariable> : variables()
+        + Type : type()
+        + {static} Scheme : forall(Type type)
+        + {static} Scheme : forall(TVariable variable, Type type)
+        + {static} Scheme : forall(List<TVariable> variables, Type type)
+    }
+}
+
+@enduml

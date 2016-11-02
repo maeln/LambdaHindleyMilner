@@ -7,11 +7,11 @@ import types.Type;
 /**
  * Created by valentin on 25/10/2016.
  */
-public abstract class Lit<T> extends Expression {
+public abstract class Literal<T> extends Expression {
     private T value;
     private Type type;
 
-    public Lit(T value, TConstructor type){
+    public Literal(T value, TConstructor type){
         this.value = value;
         this.type = type;
     }

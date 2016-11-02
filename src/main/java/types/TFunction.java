@@ -47,7 +47,7 @@ public class TFunction extends Type {
 
 
     @Override
-    protected Substitution unifyWith( TFunction fun) {
+    protected Substitution unifyWith(TFunction fun) {
         Substitution sub1 = left.unifyWith(fun.left);
         Substitution sub2 = right.apply(sub1).unifyWith(fun.right.apply(sub1));
         return sub2.composeWith(sub1);

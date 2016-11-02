@@ -2,15 +2,17 @@ package types;
 
 import inference.Substitution;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Created by valentin on 18/10/2016.
  *
  * Constructeur de type. Ceci n'est pas utilisé pour le moment.
  */
-public class TConstructor extends Type {
-    private final static HashSet<TConstructor> instantiated = new HashSet<>();
+public class  TConstructor extends Type {
+    private final static Map<String, TConstructor> instantiated = new HashMap<>();
     private final String name;
 
     private TConstructor(String name) {
@@ -19,8 +21,11 @@ public class TConstructor extends Type {
     }
 
     public static TConstructor constructor(String name) {
-        TConstructor cons = new TConstructor(name);
-        if(instantiated.add(cons)) System.out.println("Creation avoidable : TConstructor(" + name + ")");
+        TConstructor cons = instantiated.get(name);
+        if(cons == null) {
+            cons = new TConstructor(name);
+            instantiated.put(name, cons);
+        }
         return cons;
     }
 

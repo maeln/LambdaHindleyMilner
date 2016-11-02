@@ -10,14 +10,7 @@ import inference.interfaces.Unifyable;
  *
  * Interface générale de type.
  */
-public abstract class Type implements Substitutable<Type>, Unifyable{
-
-    @Override
-    public Type apply(Substitution substitution) {
-        Type result = this;
-        for (TVariable var : substitution.variables()) result = result.substitute(var, substitution.substituteOf(var));
-        return result;
-    }
+public abstract class Type extends Substitutable<Type> implements Unifyable{
 
     @Override
     public Type identity() {
@@ -27,10 +20,14 @@ public abstract class Type implements Substitutable<Type>, Unifyable{
     @Override
     public final Substitution unifyWith(Type type) {
         if(this.equals(type)) return new Substitution();
-        if(type instanceof TVariable) return bind((TVariable) type, this);
+        if(type instanceof TVariable) return unifyWith((TVariable) type);
         if(type instanceof TFunction) return unifyWith((TFunction) type);
         if(type instanceof TConstructor) return unifyWith((TConstructor) type);
         throw new UnificationFailException(this, type);
+    }
+
+    protected Substitution unifyWith(TVariable var) {
+        return bind(var, this);
     }
 
     protected Substitution unifyWith(TFunction fun) {

@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by valentin on 18/10/2016.
  */
-public class Substitution implements Substitutable<Substitution>{
+public class Substitution extends Substitutable<Substitution> {
     private HashMap<TVariable, Type> subs = new HashMap<>();
 
     public Substitution() {}
@@ -56,6 +56,11 @@ public class Substitution implements Substitutable<Substitution>{
         for (TVariable variable : variables())
             subs.replace(variable, substituteOf(variable).substitute(var, t));
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return subs.toString();
     }
 
     @Override

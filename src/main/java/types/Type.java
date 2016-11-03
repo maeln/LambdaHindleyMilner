@@ -37,4 +37,6 @@ public abstract class Type extends Substitutable<Type> implements Unifyable{
     protected Substitution unifyWith(TConstructor cons) {
         throw new UnificationFailException(this, cons);
     }
+
+    public abstract Type instantiate(Substitution sub);
 }

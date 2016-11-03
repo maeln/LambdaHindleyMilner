@@ -68,5 +68,10 @@ public class  TConstructor extends Type {
     public String toString() {
         return name;
     }
+
+    @Override
+    public Type instantiate(Substitution sub) {
+        return this;
+    }
     // Object override - End
 }

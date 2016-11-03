@@ -47,12 +47,15 @@ public class TypeInferenceEnv {
         constraints.add(new Constraint(t1, t2));
     }
 
-    public Type instantiate(Scheme scheme) {
-        List<Type> freshVars = new LinkedList<>();
-        scheme.variables().forEach(var -> freshVars.add(freshName()));
-
-        return scheme.type().apply(new Substitution(scheme.variables(), freshVars));
-    }
+//    public Type instantiate(Scheme scheme) {
+//        List<Type> freshVars = new LinkedList<>();
+//        scheme.variables().forEach(var -> freshVars.add(freshName()));
+//
+//        Type instatiation = scheme.type().duplicate();
+//        instatiation.apply(new Substitution(scheme.variables(), freshVars));
+//
+//        return instatiation;
+//    }
 
     public Scheme generalize(Type t) {
         HashSet<TVariable> freeVars = t.ftv();

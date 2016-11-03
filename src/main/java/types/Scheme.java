@@ -1,10 +1,12 @@
 package types;
 
 import inference.Substitution;
+import inference.environements.TypeInferenceEnv;
 import inference.interfaces.Substitutable;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,7 +55,8 @@ public class Scheme extends Substitutable<Scheme> {
 
     @Override
     public Scheme substitute(TVariable var, Type t) {
-        return variables.contains(var) ? this : forall(variables, type.substitute(var, t));
+        if(!variables().contains(var)) type = type.substitute(var, t);
+        return this;
     }
 
     @Override
@@ -95,6 +98,13 @@ public class Scheme extends Substitutable<Scheme> {
         }
 
         return res + "." + type;
+    }
+
+    public Type instantiate(TypeInferenceEnv env) {
+        List<Type> freshVars = new LinkedList<>();
+        variables().forEach(var -> freshVars.add(env.freshName()));
+
+        return type().instantiate(new Substitution(variables(), freshVars));
     }
 
     // Object override - End

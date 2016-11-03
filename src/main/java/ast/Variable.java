@@ -21,7 +21,7 @@ public class Variable extends Expression {
 
 	@Override
 	public Type infer(TypeInferenceEnv env) {
-		return env.instantiate(env.lookup(this));
+		return env.lookup(this).instantiate(env);
 	}
 
 

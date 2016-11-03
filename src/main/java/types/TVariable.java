@@ -53,6 +53,11 @@ public class TVariable extends Type {
     }
 
     @Override
+    public Type instantiate(Substitution sub) {
+        return sub.variables().contains(this) ? sub.substituteOf(this) : this;
+    }
+
+    @Override
     protected Substitution unifyWith(TVariable var) {
         return bind(this, var);
     }

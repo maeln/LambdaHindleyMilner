@@ -1,6 +1,7 @@
 package app;
 
 import ast.*;
+import ast.lit.Bool;
 import ast.lit.Int;
 import org.fusesource.jansi.AnsiConsole;
 
@@ -41,11 +42,24 @@ public class Main {
         );
         //*/
 
+		// (let f = \x -> x in ((\x -> \y -> y (f (3::Int))) (f True)))
+		Expression remi1 = new Bool(true);
+		Expression remi2 = new Let("f",new Lambda("x", new Variable("x")),new Application(new Variable("f"),remi1));
+		Expression remi3 = new Let("f",new Lambda("x", new Variable("x")),new Application(new Lambda("x", new Lambda("y",new Application(new Variable("y"),new Application(new Variable("f"),new Int(3)))))
+				,new Application(new Variable("f"),new Bool(true))));
+
+		// (\f -> \x -> x in ((\x -> \y -> y (f (3::Int))) (f True))) (\z->z)
+		Expression remi4 = new Application(new Lambda("f",new Application(new Lambda("x", new Lambda("y",new Application(new Variable("y"),new Application(new Variable("f"),new Int(3)))))
+				,new Application(new Variable("f"),new Bool(true)))),new Lambda("x", new Variable("x")));
+
+
+		infer(remi3);
+
         Expression lambda = Lambda.makeLambdas(root, "s", "d", "g");
         Expression let = new Let("x", lambda, root);
         Expression app = Application.makeApps(lambda, root, lambda, let, root);
 
-        infer(root);
+        //infer(root);
 
 		/*System.out.println(lambda);
         System.out.println(let);

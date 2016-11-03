@@ -53,8 +53,7 @@ public class Scheme extends Substitutable<Scheme> {
 
     @Override
     public Scheme substitute(TVariable var, Type t) {
-        if(variables.contains(var)) type = type.substitute(var, t);
-        return this;
+        return variables.contains(var) ? this : forall(variables, type.substitute(var, t));
     }
 
     @Override

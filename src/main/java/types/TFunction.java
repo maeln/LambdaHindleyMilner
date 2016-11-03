@@ -47,7 +47,7 @@ public class TFunction extends Type {
     public Type substitute(TVariable var, Type type) {
         TFunction result;
         String before = this.toString();
-        //*
+        /*
         left = left.substitute(var, type);
         right = right.substitute(var, type);
         result = this;

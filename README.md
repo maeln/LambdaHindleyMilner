@@ -5,3 +5,6 @@ Java implementation of Hindley Milner type inference algorithm for lambda calcul
 
     mvn clean compile assembly:single
 
+## Note:
+
+Most of the implementation was done by [Valentin Cocaud](https://github.com/EmrysMyrddin).
